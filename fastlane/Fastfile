@@ -1,17 +1,10 @@
-default_platform(:ios)
-
+opt_out_usage
 platform :ios do
-  desc "Build the iOS app"
   lane :build do
-    match(
-      type: "adhoc",
-      git_url: ENV["MATCH_GIT_URL"]
-    )
-
-    build_app(
-      scheme: "YourAppScheme",
-      export_method: "ad-hoc",
-      output_directory: "build"
+    gym(
+      scheme: "iOSSampleApp",  # Replace with your scheme name
+      clean: true,
+      skip_codesigning: true
     )
   end
 end
