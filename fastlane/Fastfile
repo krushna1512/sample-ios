@@ -2,7 +2,7 @@ opt_out_usage
 platform :ios do
   lane :build do
     gym(
-      scheme: "iOSSampleApp",  # Replace with your scheme name
+      scheme: "SampleApp",  # Replace with your scheme name
       clean: true,
       skip_codesigning: true
     )
