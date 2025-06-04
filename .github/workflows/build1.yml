@@ -1,0 +1,25 @@
+name: iOS Build (Gym Only)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'  # Avoid deprecation warnings from Ruby 3.3
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+          bundle update fastlane  
+
+      - name: Build with Fastlane (gym)
+        run: bundle exec fastlane ios build
