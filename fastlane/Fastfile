@@ -6,7 +6,7 @@ platform :ios do
       clean: true,
       export_method: "development",
       export_options: {
-        signingStyle: "none"
+        signingStyle: "automatic"
       }
     )
   end
