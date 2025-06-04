@@ -4,7 +4,10 @@ platform :ios do
     gym(
       scheme: "SampleApp",  # Replace with your scheme name
       clean: true,
-      skip_codesigning: true
+      export_method: "development",
+      export_options: {
+        signingStyle: "none"
+      }
     )
   end
 end
