@@ -1,4 +1,4 @@
-name: Build Test
+name:  Build Test
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Set up Ruby
@@ -21,12 +21,13 @@ jobs:
           gem install bundler
           bundle install
 
-      - name: Setup App Store Connect API Key
+      - name: Decode .p8 file from base64
         env:
-          APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+          BASE64_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
+          KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
         run: |
           mkdir -p ~/private_keys
-          echo "$APP_STORE_CONNECT_API_KEY" > ~/private_keys/AuthKey_${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}.p8
+          echo "$BASE64_KEY" | base64 -d > ~/private_keys/AuthKey_${KEY_ID}.p8
 
       - name: Run Fastlane
         env:
