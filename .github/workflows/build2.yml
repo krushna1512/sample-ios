@@ -25,6 +25,7 @@ jobs:
         env:
           BASE64_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
           KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
         run: |
           mkdir -p ~/private_keys
           echo "$BASE64_KEY" | base64 -d > ~/private_keys/AuthKey_${KEY_ID}.p8
