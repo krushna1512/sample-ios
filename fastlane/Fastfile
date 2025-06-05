@@ -1,14 +1,10 @@
-opt_out_usage
 platform :ios do
-  lane :build do
-    gym(
+  desc "Build the app for App Store"
+  lane :build_only do
+    build_app(
       scheme: "SampleApp",
-      export_method: "development",
-      export_options: {
-        signingStyle: "automatic"  # or "none" if you want to skip signing
-      },
-      clean: true,
-      skip_profile_detection: false    
+      export_method: "app-store"
     )
   end
 end
+
