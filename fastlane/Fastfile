@@ -1,9 +1,11 @@
 platform :ios do
-  desc "Build the app for App Store"
+  desc "Build the app for development (no publish)"
   lane :build_only do
     build_app(
       scheme: "SampleApp",
-      export_method: "app-store"
+      export_method: "development", # <<-- for local/device builds
+      clean: true,
+      output_directory: "./build"
     )
   end
 end
