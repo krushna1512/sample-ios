@@ -9,7 +9,8 @@ platform :ios do
 
     match(
       api_key: api_key,
-      type: "development"
+      type: "development",
+      git_url: ENV["MATCH_GIT_URL"]
     )
 
     build_app(
