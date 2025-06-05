@@ -1,12 +1,8 @@
-platform :ios do
-  desc "Build the app for development (no publish)"
-  lane :build_only do
-    build_app(
-      scheme: "SampleApp",
-      export_method: "development", # <<-- for local/device builds
-      clean: true,
-      output_directory: "./build"
-    )
-  end
-end
+match(type: "development")
+build_app(
+  scheme: "SampleApp",
+  export_method: "development",
+  output_directory: "./build",
+  clean: true
+)
 
