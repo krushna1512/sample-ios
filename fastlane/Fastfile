@@ -11,6 +11,7 @@ lane :build_only do
     git_branch: ENV["MATCH_GIT_BRANCH"] || "certs",
     type: "development",
     app_identifier: "com.yapsody.SampleApp"
+    readonly: true
   )
 
   build_app(
