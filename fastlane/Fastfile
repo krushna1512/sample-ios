@@ -23,6 +23,6 @@ lane :build_only do
         "com.yapsody.SampleApp" => "match Development com.yapsody.SampleApp"
       }
     },
-    xcodebuild_args: ["-allowProvisioningUpdates"]  # <-- Add this line
+    xcodebuild_args: "-allowProvisioningUpdates"
   )
 end
