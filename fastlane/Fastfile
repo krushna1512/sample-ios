@@ -22,6 +22,7 @@ lane :build_only do
       provisioningProfiles: {
         "com.yapsody.SampleApp" => "match Development com.yapsody.SampleApp"
       }
-    }
+    },
+    xcodebuild_args: ["-allowProvisioningUpdates"]  # <-- Add this line
   )
 end
