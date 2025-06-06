@@ -17,7 +17,7 @@ lane :build_only do
   build_app(
     scheme: "SampleApp",
     export_method: "development",
-    workspace: "SampleApp.xcodeproj/project.xcworkspace",
+    project: "SampleApp.xcodeproj",
     export_options: {
       provisioningProfiles: {
         "com.yapsody.SampleApp" => "match Development com.yapsody.SampleApp"
