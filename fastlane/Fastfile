@@ -1,18 +1,16 @@
-default_platform(:ios)
+lane :build_only do
+  match(
+    type: "appstore",
+    readonly: true,
+    app_identifier: "com.yapsody.SampleApp"  # replace with your actual app bundle ID
+  )
 
-platform :ios do
-  desc "Build the app using gym"
-  lane :build_only do
-    # Use match to sync provisioning profiles and certificates if you use match
-    match(type: "appstore", readonly: true)
-
-    gym(
-      project: "SampleApp.xcodeproj",  # Your Xcode project file
-      scheme: "SampleApp",             # Your scheme name
-      clean: true,
-      export_method: "app-store",
-      output_directory: "./build",
-      output_name: "SampleApp.ipa"
-    )
-  end
+  gym(
+    project: "SampleApp.xcodeproj",
+    scheme: "SampleApp",
+    clean: true,
+    export_method: "app-store",
+    output_directory: "./build",
+    output_name: "SampleApp.ipa"
+  )
 end
