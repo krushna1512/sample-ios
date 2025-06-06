@@ -50,3 +50,10 @@ jobs:
           APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
           APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
         run: bundle exec fastlane build_only
+
+      - name: Show xcodebuild archive error log
+        if: failure() # Run this step only if previous step fails
+        run: |
+          echo "Dumping last 50 lines of xcodebuild log..."
+          tail -n 50 ~/Library/Logs/gym/SampleApp-SampleApp.log || echo "Log file not found"
+
