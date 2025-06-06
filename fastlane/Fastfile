@@ -1,6 +1,17 @@
+api_key = app_store_connect_api_key(
+  key_id: ENV['APP_STORE_CONNECT_API_KEY_KEY_ID'],
+  issuer_id: ENV['APP_STORE_CONNECT_API_KEY_ISSUER_ID'],
+  key_filepath: "~/private_keys/AuthKey_#{ENV['APP_STORE_CONNECT_API_KEY_KEY_ID']}.p8",
+  in_house: false
+)
+
 lane :build_and_upload do
-  match(type: "appstore", app_identifier: "com.yapsody.SampleApp", readonly: true)
-  
+  match(
+    type: "appstore",
+    app_identifier: "com.yapsody.SampleApp",
+    readonly: true
+  )
+
   gym(
     project: "SampleApp.xcodeproj",
     scheme: "SampleApp",
@@ -9,11 +20,12 @@ lane :build_and_upload do
     output_directory: "./build",
     output_name: "SampleApp.ipa"
   )
-  
+
   deliver(
     ipa: "./build/SampleApp.ipa",
-    skip_metadata: true,   # skip metadata upload if you want
-    skip_screenshots: true, # skip screenshots if you want
-    force: true            # force upload without prompts
+    skip_metadata: true,
+    skip_screenshots: true,
+    force: true,
+    api_key: api_key
   )
 end
