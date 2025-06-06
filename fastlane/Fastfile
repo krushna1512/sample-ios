@@ -18,6 +18,7 @@ lane :build_only do
     scheme: "SampleApp",
     export_method: "development",
     project: "SampleApp.xcodeproj",
+    export_team_id: "MWVFW922NX",
     export_options: {
       provisioningProfiles: {
         "com.yapsody.SampleApp" => "match Development com.yapsody.SampleApp"
