@@ -1,18 +1,19 @@
-lane :build_only do
-  match(
-    type: "deployment",
-    app_identifier: "com.yapsody.SampleApp"
-    # remove readonly if you want match to create/update profiles
-    # readonly: true
-  )
-
+lane :build_and_upload do
+  match(type: "appstore", app_identifier: "com.yapsody.SampleApp", readonly: true)
+  
   gym(
     project: "SampleApp.xcodeproj",
     scheme: "SampleApp",
     clean: true,
-    export_method: "deployment",
+    export_method: "app-store",
     output_directory: "./build",
     output_name: "SampleApp.ipa"
   )
+  
+  deliver(
+    ipa: "./build/SampleApp.ipa",
+    skip_metadata: true,   # skip metadata upload if you want
+    skip_screenshots: true, # skip screenshots if you want
+    force: true            # force upload without prompts
+  )
 end
-
