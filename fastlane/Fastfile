@@ -1,16 +1,18 @@
 lane :build_only do
   match(
-    type: "appstore",
-    readonly: true,
-    app_identifier: "com.yapsody.SampleApp"  # replace with your actual app bundle ID
+    type: "deployment",
+    app_identifier: "com.yapsody.SampleApp"
+    # remove readonly if you want match to create/update profiles
+    # readonly: true
   )
 
   gym(
     project: "SampleApp.xcodeproj",
     scheme: "SampleApp",
     clean: true,
-    export_method: "app-store",
+    export_method: "deployment",
     output_directory: "./build",
     output_name: "SampleApp.ipa"
   )
 end
+
