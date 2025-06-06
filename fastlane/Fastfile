@@ -11,7 +11,8 @@ lane :build_only do
     git_branch: ENV["MATCH_GIT_BRANCH"] || "certs",
     type: "development",
     app_identifier: "com.yapsody.SampleApp",
-    readonly: true
+    readonly: true,
+    verbose: true
   )
 
   build_app(
@@ -22,7 +23,10 @@ lane :build_only do
     export_options: {
       provisioningProfiles: {
         "com.yapsody.SampleApp" => "match Development com.yapsody.SampleApp"
-      }
+      },
+      signingStyle: "manual",
+      signingCertificate: "Apple Development",
+      teamID: "MWVFW922NX"
     },
     xcargs: "-allowProvisioningUpdates"
   )
