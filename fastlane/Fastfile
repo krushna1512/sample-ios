@@ -10,7 +10,7 @@ lane :build_and_upload do
     type: "development",
     app_identifier: "com.yapsody.SampleApp",
     readonly: true,
-    git_branch: "certs"
+    #git_branch: "certs"
   )
 
   gym(
