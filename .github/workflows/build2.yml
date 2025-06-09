@@ -34,6 +34,13 @@ jobs:
           gem install bundler
           bundle install
 
+      - name: Import signing certificate
+        run: |
+          security import ./certs/distribution.p12 -k build.keychain -P "${MATCH_PASSWORD}" -T /usr/bin/codesign
+        env:
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+
+
       - name: Decode .p8 file from base64
         env:
           BASE64_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
