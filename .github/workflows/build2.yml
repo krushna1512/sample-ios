@@ -36,7 +36,7 @@ jobs:
 
       - name: Import signing certificate
         run: |
-          security import ./certs/distribution.p12 -k build.keychain -P "${MATCH_PASSWORD}" -T /usr/bin/codesign
+          security import ./certs/development/Z9U3N26P92.p12 -k build.keychain -P "${MATCH_PASSWORD}" -T /usr/bin/codesign
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
 
