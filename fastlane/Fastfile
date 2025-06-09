@@ -7,7 +7,7 @@ api_key = app_store_connect_api_key(
 
 lane :build_and_upload do
   match(
-    type: "appstore",
+    type: "development",
     app_identifier: "com.yapsody.SampleApp",
     readonly: true
   )
@@ -16,7 +16,7 @@ lane :build_and_upload do
     project: "SampleApp.xcodeproj",
     scheme: "SampleApp",
     clean: true,
-    export_method: "app-store",
+    export_method: "development",
     output_directory: "./build",
     output_name: "SampleApp.ipa"
   )
