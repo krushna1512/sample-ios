@@ -40,6 +40,13 @@ jobs:
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
 
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      
+      - name: Fetch certs branch
+        run: |
+          git fetch origin certs
+          git checkout origin/certs -- certs/development/Z9U3N26P92.p12
 
       - name: Decode .p8 file from base64
         env:
