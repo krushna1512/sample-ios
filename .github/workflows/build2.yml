@@ -34,12 +34,6 @@ jobs:
           gem install bundler
           bundle install
 
-      - name: Import signing certificate
-        run: |
-          security import ./certs/development/Z9U3N26P92.p12 -k build.keychain -P "${MATCH_PASSWORD}" -T /usr/bin/codesign
-        env:
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-
       - name: Checkout repo
         uses: actions/checkout@v4
       
@@ -47,6 +41,12 @@ jobs:
         run: |
           git fetch origin certs
           git checkout origin/certs -- certs/development/Z9U3N26P92.p12
+
+      - name: Import signing certificate
+        run: |
+          security import ./certs/development/Z9U3N26P92.p12 -k build.keychain -P "${MATCH_PASSWORD}" -T /usr/bin/codesign
+        env:
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
 
       - name: Decode .p8 file from base64
         env:
