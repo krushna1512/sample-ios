@@ -22,7 +22,9 @@ lane :build_and_upload do
       provisioningProfiles: {
         "com.yapsody.SampleApp" => "match Development com.yapsody.SampleApp"
       }
-    }
+    },
+    clean: true,
+    output_directory: "./build"
   )
 
   deliver(
