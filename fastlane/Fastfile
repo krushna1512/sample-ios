@@ -9,7 +9,8 @@ lane :build_and_upload do
   match(
     type: "development",
     app_identifier: "com.yapsody.SampleApp",
-    readonly: false
+    readonly: false,
+    keychain_password: ENV["KEYCHAIN_PASSWORD"]
   )
 
   gym(
@@ -17,8 +18,11 @@ lane :build_and_upload do
     scheme: "SampleApp",
     clean: true,
     export_method: "development",
-    output_directory: "./build",
-    output_name: "SampleApp.ipa"
+    export_options: {
+      provisioningProfiles: {
+        "com.yapsody.SampleApp" => "match Development com.yapsody.SampleApp"
+      }
+    }
   )
 
   deliver(
