@@ -10,7 +10,7 @@ lane :build_and_upload do
     type: "development",
     app_identifier: "com.yapsody.SampleApp",
     readonly: false,
-    keychain_password: ENV["KEYCHAIN_PASSWORD"]
+    keychain_password: ENV["MATCH_KEYCHAIN_PASSWORD"]
   )
 
   gym(
