@@ -27,6 +27,7 @@ jobs:
           security set-keychain-settings -t 3600 -u build.keychain
         env:
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+          KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
 
 
       - name: Install bundler and dependencies
@@ -47,7 +48,7 @@ jobs:
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-          MATCH_KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
+          KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
           APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
           APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
         run: bundle exec fastlane build_and_upload
