@@ -1,93 +1,65 @@
-# .github/workflows/build-test.yml
 name: Build Test
 
 on:
-  workflow_dispatch: # Allows manual triggering of the workflow
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: macos-latest # Using the latest macOS runner for Xcode builds
+    runs-on: macos-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4 # Action to check out your code
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - name: Set up Ruby environment
+      - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2' # Specify Ruby version, ensure it matches your Gemfile.lock
+          ruby-version: '3.2'
 
       - name: Select Xcode 16.2
         run: sudo xcode-select -s /Applications/Xcode_16.2.app
-        # Ensures the specific Xcode version is used, important for consistent builds.
 
-      - name: List code signing identities (before Fastlane)
+      - name: List all code signing identities
         run: security find-identity -v -p codesigning
-        # This step is for debugging. It's expected to show '0 valid identities found'
-        # at this point, as the custom keychain and identities are not yet set up.
 
-      - name: Setup custom keychain for Fastlane
+      - name: Setup keychain
         run: |
-          # Create a new, temporary keychain.
-          # We use a custom keychain to isolate build-specific credentials.
-          security create-keychain -p "$FASTLANE_KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
-          # Add the newly created keychain to the user's keychain search list.
-          # This tells macOS where to look for certificates and keys.
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
           security list-keychains -s "$KEYCHAIN_NAME"
-          # Set the new keychain as the default keychain for the current session.
           security default-keychain -s "$KEYCHAIN_NAME"
-          # Unlock the new keychain. Fastlane needs it unlocked to install items.
-          security unlock-keychain -p "$FASTLANE_KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
-          # Set keychain settings: timeout after 3600 seconds (1 hour) and allow program access.
-          # -t 3600: Keychain will lock after 3600 seconds of inactivity.
-          # -u: Allows all applications to access items without prompting.
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
           security set-keychain-settings -t 3600 -u "$KEYCHAIN_NAME"
-          # Explicitly add the new keychain to the user's search list,
-          # alongside the default login keychain, to ensure maximum discoverability.
-          security list-keychains -d user -s "$KEYCHAIN_NAME" "/Users/runner/Library/Keychains/login.keychain-db"
         env:
           KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
-          # Use a consistent secret name for the keychain password across workflow and Fastfile
-          FASTLANE_KEYCHAIN_PASSWORD: ${{ secrets.FASTLANE_KEYCHAIN_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
 
-      - name: Install bundler and Fastlane dependencies
+
+      - name: Install bundler and dependencies
         run: |
-          gem install bundler # Ensure bundler is installed
-          bundle install # Install gems from Gemfile.lock (including Fastlane)
+          gem install bundler
+          bundle install
 
-      - name: Decode App Store Connect API Key from base64
+      - name: Decode .p8 file from base64
         env:
           BASE64_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
           KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
         run: |
-          # Create a directory for the private key
           mkdir -p ~/private_keys
-          # Decode the base64 encoded private key and save it to a file
           echo "$BASE64_KEY" | base64 -d > ~/private_keys/AuthKey_${KEY_ID}.p8
-          # Set permissions for the private key
-          chmod 600 ~/private_keys/AuthKey_${KEY_ID}.p8
 
-      - name: Run Fastlane (match and gym)
+      - name: Run Fastlane
         env:
-          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }} # URL for your match git repository
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }} # Password for the match git repo (if encrypted)
-          FASTLANE_KEYCHAIN_PASSWORD: ${{ secrets.FASTLANE_KEYCHAIN_PASSWORD }} # Password for the temporary CI keychain
-          KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }} # Name of the temporary CI keychain
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+          KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
           APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
           APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
+          MATCH_KEYCHAIN_PATH: ~/Library/Keychains/build.keychain-db
         run: bundle exec fastlane build_and_upload
-        # This command executes the 'build_and_upload' lane defined in your Fastfile.
-
-      - name: List code signing identities (after Fastlane)
-        run: security find-identity -v -p codesigning
-        # This is a critical debugging step. After 'match' runs, you should ideally
-        # see at least one valid identity listed here. If not, 'match' failed.
 
       - name: Show xcodebuild archive error log
-        if: failure() # This step only runs if the previous steps (like 'Run Fastlane') fail
+        if: failure()
         run: |
-          echo "Dumping last 50 lines of xcodebuild log for debugging..."
-          # Attempt to dump the last 50 lines of the gym log file
-          tail -n 50 ~/Library/Logs/gym/SampleApp-SampleApp.log || echo "Log file not found or empty."
-          # Note: The log file path might vary slightly based on your project name.
-          # Adjust "SampleApp-SampleApp.log" if your project has a different name.
+          echo "Dumping last 50 lines of xcodebuild log..."
+          tail -n 50 ~/Library/Logs/gym/SampleApp-SampleApp.log || echo "Log file not found"
