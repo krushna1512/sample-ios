@@ -9,7 +9,7 @@ lane :build_and_upload do
   match(
     type: "development",
     app_identifier: "com.yapsody.SampleApp",
-    readonly: true,
+    readonly: is_ci,
     keychain_name: ENV["MATCH_KEYCHAIN_NAME"],
     keychain_password: ENV["MATCH_KEYCHAIN_PASSWORD"],
     force_for_new_devices: true
