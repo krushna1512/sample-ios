@@ -34,20 +34,6 @@ jobs:
           gem install bundler
           bundle install
 
-      # - name: Checkout repo
-      #   uses: actions/checkout@v4
-      
-      # - name: Fetch certs branch
-      #   run: |
-      #     git fetch origin certs
-      #     git checkout origin/certs -- certs/development/Z9U3N26P92.p12
-
-      # - name: Import signing certificate
-      #   run: |
-      #     security import ./certs/development/Z9U3N26P92.p12 -k build.keychain -P "${MATCH_PASSWORD}" -T /usr/bin/codesign
-      #   env:
-      #     MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-
       - name: Decode .p8 file from base64
         env:
           BASE64_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
