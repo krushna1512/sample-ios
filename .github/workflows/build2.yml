@@ -30,7 +30,7 @@ jobs:
           security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
           security set-keychain-settings -t 3600 -u "$KEYCHAIN_NAME"
         env:
-          KEYCHAIN_NAME: build.keychain
+          KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
 
 
@@ -55,6 +55,7 @@ jobs:
           KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
           APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
           APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
+          MATCH_KEYCHAIN_PATH: ~/Library/Keychains/build.keychain-db
         run: bundle exec fastlane build_and_upload
 
       - name: Show xcodebuild archive error log
