@@ -1,26 +1,22 @@
-default_platform(:ios)
-
 platform :ios do
   lane :build_only do
-    # Step 1: Create and unlock a temporary keychain
     create_keychain(
       name: "ci_temp.keychain",
-      password: "fastlane",
+      password: "android",
       default_keychain: true,
       unlock: true,
       timeout: 3600,
       lock_when_sleeps: false
     )
 
-    # Step 2: Install certificates and profiles using match + App Store Connect API
     match(
       type: "development",
       api_key_path: "./api_key.json",
       keychain_name: "ci_temp.keychain",
-      keychain_password: "fastlane"
+      keychain_password: "android",
+      readonly: true
     )
 
-    # Step 3: Build the app using xcodeproj (not workspace)
     build_app(
       project: "SampleApp.xcodeproj",
       scheme: "SampleApp",
@@ -29,7 +25,6 @@ platform :ios do
       clean: true
     )
 
-    # Optional: delete keychain to clean up
     delete_keychain(name: "ci_temp.keychain")
   end
 end
