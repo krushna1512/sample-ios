@@ -41,3 +41,13 @@ jobs:
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+
+      - name: Set up match and build with Fastlane
+        env:
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}  # if using encrypted repo
+        run: bundle exec fastlane build_only
+
+      - name: Delete temporary keychain (cleanup)
+        if: always()
+        run: |
+          security delete-keychain ci_temp.keychain
