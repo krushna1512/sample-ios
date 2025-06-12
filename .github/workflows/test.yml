@@ -1,34 +1,54 @@
-name: iOS Test Signin
+name: test signin
 
 on:
   workflow_dispatch:
 
 jobs:
-  test-signin:
-    name: test signin
+  build:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2'
+          ruby-version: '3.1'
 
-      - name: Install Fastlane
-        run: gem install fastlane
+      - name: Install Bundler
+        run: gem install bundler
 
-      - name: Run match to get provisioning profiles
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Create API Key JSON file
+        run: |
+          echo '{
+            "key_id": "${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}",
+            "issuer_id": "${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}",
+            "key": "${{ secrets.APP_STORE_PRIVATE_KEY }}"
+          }' > api_key.json
+
+      - name: Create temporary keychain
+        run: |
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
+          security default-keychain -s "$KEYCHAIN_NAME"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
+          security set-keychain-settings "$KEYCHAIN_NAME"
+        env:
+          KEYCHAIN_NAME: build.keychain
+          KEYCHAIN_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+
+      - name: Run match (development)
+        run: |
+          bundle exec fastlane match development \
+            --keychain_name "$KEYCHAIN_NAME" \
+            --keychain_password "$KEYCHAIN_PASSWORD" \
+            --api_key_path "./api_key.json"
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
           FASTLANE_API_KEY_PATH: ./api_key.json
           KEYCHAIN_NAME: build.keychain
-          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-        run: |
-          bundle exec fastlane match development \
-            --keychain_name "$KEYCHAIN_NAME" \
-            --keychain_password "$KEYCHAIN_PASSWORD" \
-            --api_key_path "$FASTLANE_API_KEY_PATH"
+          KEYCHAIN_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
