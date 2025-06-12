@@ -1,1 +1,16 @@
+create_keychain(
+  name: "ci_temp.keychain",
+  password: "fastlane",
+  default_keychain: true,
+  unlock: true,
+  timeout: 3600,
+  lock_when_sleeps: false
+)
+
+match(
+  type: "development",
+  api_key_path: "./api_key.json",
+  keychain_name: "ci_temp.keychain",
+  keychain_password: "fastlane"
+)
 
