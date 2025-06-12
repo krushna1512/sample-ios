@@ -8,47 +8,35 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.1'
+          ruby-version: 3.1
 
-      - name: Install Bundler
-        run: gem install bundler
+      - name: Install Fastlane
+        run: gem install fastlane
 
-      - name: Install dependencies
-        run: bundle install
-
-      - name: Create API Key JSON file
+      - name: Generate App Store Connect API Key JSON
         run: |
           echo '{
-            "key_id": "${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}",
-            "issuer_id": "${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}",
-            "key": "${{ secrets.APP_STORE_PRIVATE_KEY }}"
+            "key_id": "5B2TCCH5A5",
+            "issuer_id": "69a6de7a-0c96-47e3-e053-5b8c7c11a4d1",
+            "key_content": "-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgPHaYGDThgZbLNOiN\nM5Kgf/DWScZa77Td7Z0BkXcIIzWgCgYIKoZIzj0DAQehRANCAATwviHhbnKXVYYg\nCTykJ1/f1nzfsLzVeZLTZ/eTBQWaZY65h8XogyR2AsOglZ7HVW5IYCpXPD6kpoz9\nyGpTfliU\n-----END PRIVATE KEY-----",
+            "duration": 1200
           }' > api_key.json
 
       - name: Create temporary keychain
         run: |
-          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
-          security default-keychain -s "$KEYCHAIN_NAME"
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_NAME"
-          security set-keychain-settings "$KEYCHAIN_NAME"
-        env:
-          KEYCHAIN_NAME: build.keychain
-          KEYCHAIN_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          security create-keychain -p "temp_pass" build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "temp_pass" build.keychain
+          security set-keychain-settings -t 3600 -u build.keychain
 
-      - name: Run match (development)
-        run: |
-          bundle exec fastlane match development \
-            --keychain_name "$KEYCHAIN_NAME" \
-            --keychain_password "$KEYCHAIN_PASSWORD" \
-            --api_key_path "./api_key.json"
+      - name: Match development certificate
+        run: fastlane match development --api_key_path ./api_key.json
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
-          FASTLANE_API_KEY_PATH: ./api_key.json
-          KEYCHAIN_NAME: build.keychain
-          KEYCHAIN_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
