@@ -14,7 +14,8 @@ platform :ios do
       api_key_path: "./api_key.json",
       keychain_name: "ci_temp.keychain",
       keychain_password: "android",
-      readonly: true
+      readonly: true,
+      git_url: ENV["MATCH_GIT_URL"]
     )
 
     build_app(
