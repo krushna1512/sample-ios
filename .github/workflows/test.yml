@@ -1,14 +1,15 @@
-name: Test Fastlane Match Signing Setup
+name: iOS Test Signin
 
 on:
   workflow_dispatch:
 
 jobs:
-  test-codesigning:
+  test-signin:
+    name: test signin
     runs-on: macos-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Set up Ruby
@@ -16,50 +17,18 @@ jobs:
         with:
           ruby-version: '3.2'
 
-      - name: Select Xcode version
-        run: sudo xcode-select -s /Applications/Xcode_16.2.app
+      - name: Install Fastlane
+        run: gem install fastlane
 
-      - name: Set up temporary keychain
-        run: |
-          security create-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
-          security set-keychain-settings -t 3600 -u build.keychain
+      - name: Run match to get provisioning profiles
         env:
-          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
-
-      - name: Install bundler and dependencies
-        run: |
-          gem install bundler
-          bundle install
-
-      - name: Decode App Store Connect API key
-        env:
-          BASE64_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
-          KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
-          ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
-        run: |
-          mkdir -p ./private_keys
-          echo "$BASE64_KEY" | base64 -d > ./private_keys/AuthKey_${KEY_ID}.p8
-          echo '{
-            "key_id": "'"$KEY_ID"'",
-            "issuer_id": "'"$ISSUER_ID"'",
-            "key_filepath": "./private_keys/AuthKey_'"$KEY_ID"'.p8",
-            "in_house": false
-          }' > ./api_key.json
-
-      - name: Run fastlane match (development)
-        env:
-          FASTLANE_API_KEY_PATH: ./api_key.json
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+          FASTLANE_API_KEY_PATH: ./api_key.json
           KEYCHAIN_NAME: build.keychain
           KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
         run: |
           bundle exec fastlane match development \
             --keychain_name "$KEYCHAIN_NAME" \
-            --keychain_password "$KEYCHAIN_PASSWORD"
-
-      - name: Show installed code signing identities
-        run: |
-          security find-identity -v -p codesigning build.keychain
+            --keychain_password "$KEYCHAIN_PASSWORD" \
+            --api_key_path "$FASTLANE_API_KEY_PATH"
