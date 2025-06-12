@@ -37,7 +37,7 @@ jobs:
           security set-keychain-settings -t 3600 -u build.keychain
 
       - name: Match development certificate
-        run: fastlane match development --api_key_path ./api_key.json
+        run: bundle exec fastlane match development --api_key_path ./api_key.json
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
