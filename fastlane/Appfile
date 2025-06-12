@@ -1,0 +1,2 @@
+app_identifier("com.yapsody.SampleApp") # Replace with your actual bundle ID
+team_id("MWVFW922NX") # Optional but recommended
