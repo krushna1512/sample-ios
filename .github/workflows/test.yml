@@ -49,7 +49,8 @@ jobs:
 
       - name: Set up match and build with Fastlane
         env:
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}  # if using encrypted repo
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }} 
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}# if using encrypted repo
         run: bundle exec fastlane ios build_only
 
       - name: Delete temporary keychain (cleanup)
