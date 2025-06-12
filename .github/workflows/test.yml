@@ -29,12 +29,12 @@ jobs:
             "in_house": false
           }' > api_key.json
 
-      - name: Create temporary keychain
+      - name: Setup keychain for Fastlane
         run: |
-          security create-keychain -p "temp_pass" build.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p "temp_pass" build.keychain
-          security set-keychain-settings -t 3600 -u build.keychain
+          security create-keychain -p fastlane ci_temp.keychain
+          security default-keychain -s ci_temp.keychain
+          security unlock-keychain -p fastlane ci_temp.keychain
+          security set-keychain-settings ci_temp.keychain
 
       - name: Match development certificate
         run: bundle exec fastlane match development --api_key_path ./api_key.json
