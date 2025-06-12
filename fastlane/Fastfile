@@ -15,7 +15,7 @@ platform :ios do
       keychain_name: "ci_temp.keychain",
       keychain_password: "android",
       readonly: true,
-      git_url: ENV["MATCH_GIT_URL"]
+      git_url: https://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@github.com/krushna1512/certs.git
     )
 
     build_app(
