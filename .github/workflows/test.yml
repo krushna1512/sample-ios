@@ -44,8 +44,9 @@ jobs:
 
       - name: Unlock keychain
         run: |
-          security unlock-keychain -p "android" ~/Library/Keychains/ci_temp.keychain
-          security set-key-partition-list -S apple-tool:,apple: -s -k "android" ~/Library/Keychains/ci_temp.keychain
+          security unlock-keychain -p "android" ci_temp.keychain
+          security set-key-partition-list -S apple-tool:,apple: -s -k "android" ci_temp.keychain
+
 
       - name: Set up match and build with Fastlane
         env:
