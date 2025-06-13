@@ -53,7 +53,8 @@ jobs:
             "issuer_id": "69a6de7a-0c96-47e3-e053-5b8c7c11a4d1",
             "key_filepath": "./AuthKey.p8",
             "duration": 1200,
-            "in_house": false
+            "in_house": false,
+            "is_key_content_base64": true
           }' > api_key.json
 
 
