@@ -42,12 +42,6 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
 
-      - name: Unlock keychain
-        run: |
-          security unlock-keychain -p "android" ci_temp.keychain
-          security set-key-partition-list -S apple-tool:,apple: -s -k "android" ci_temp.keychain
-
-
       - name: Set up match and build with Fastlane
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }} 
