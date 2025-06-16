@@ -31,10 +31,10 @@ jobs:
 
       - name: Setup keychain for Fastlane
         run: |
-          security create-keychain -p android ci_temp.keychain
-          security default-keychain -s ci_temp.keychain
-          security unlock-keychain -p android ci_temp.keychain
-          security set-keychain-settings ci_temp.keychain
+          security create-keychain -p ${{ secrets.MATCH_PASSWORD }} ${{ secrets.MATCH_KEYCHAIN_NAME }}
+          security default-keychain -s ${{ secrets.MATCH_KEYCHAIN_NAME }}
+          security unlock-keychain -p ${{ secrets.MATCH_PASSWORD }} ${{ secrets.MATCH_KEYCHAIN_NAME }}
+          security set-keychain-settings ${{ secrets.MATCH_KEYCHAIN_NAME }}
 
       - name: Match development certificate
         run: bundle exec fastlane match development --api_key_path ./api_key.json
