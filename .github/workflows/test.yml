@@ -42,12 +42,17 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
 
-      - name: Write API Key File
-        run: echo "${{ secrets.APP_STORE_CONNECT_API_KEY }}" > ./AuthKey.p8
-
-
       - name: Generate App Store Connect API Key
         run: echo "${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}" > AuthKey.p8
+
+
+      - name: List AuthKey file
+        run: ls -l AuthKey.p8
+      
+      - name: Print AuthKey contents (base64-decoded)
+        run: |
+          echo "Decoded AuthKey.p8 contents:"
+          cat AuthKey.p8
 
       - name: Set up match and build with Fastlane
         env:
