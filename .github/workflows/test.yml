@@ -22,8 +22,8 @@ jobs:
       - name: Generate App Store Connect API Key JSON
         run: |
           echo '{
-            "key_id": "5B2TCCH5A5",
-            "issuer_id": "69a6de7a-0c96-47e3-e053-5b8c7c11a4d1",
+            "key_id": "${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}",
+            "issuer_id": "${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID}}",
             "key": "${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}",
             "duration": 1200,
             "in_house": false
