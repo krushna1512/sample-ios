@@ -17,7 +17,7 @@ platform :ios do
       key_filepath: './AuthKey.p8',
       duration: 1200,
       in_house: false,
-      is_key_content_base64: false
+      is_key_content_base64: true
     )
 
     # Fetch provisioning profiles & certificates using match
