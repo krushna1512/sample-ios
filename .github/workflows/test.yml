@@ -24,7 +24,7 @@ jobs:
           echo '{
             "key_id": "${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}",
             "issuer_id": "${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID}}",
-            "key": "-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgPHaYGDThgZbLNOiN\nM5Kgf/DWScZa77Td7Z0BkXcIIzWgCgYIKoZIzj0DAQehRANCAATwviHhbnKXVYYg\nCTykJ1/f1nzfsLzVeZLTZ/eTBQWaZY65h8XogyR2AsOglZ7HVW5IYCpXPD6kpoz9\nyGpTfliU\n-----END PRIVATE KEY-----",
+            "key": "${{ secrets.APP_STORE_CONNECT_API_KEY}}",
             "duration": 1200,
             "in_house": false
           }' > api_key.json
@@ -60,6 +60,7 @@ jobs:
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}# if using encrypted repo
           APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
           APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID}}
+          APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
         run: bundle exec fastlane ios build_only
 
       - name: Delete temporary keychain (cleanup)
