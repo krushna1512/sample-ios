@@ -24,7 +24,7 @@ jobs:
           echo '{
             "key_id": "${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}",
             "issuer_id": "${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID}}",
-            "key": "${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}",
+            "key": "${{ secrets.APP_STORE_CONNECT_API_KEY }}",
             "duration": 1200,
             "in_house": false
           }' > api_key.json
