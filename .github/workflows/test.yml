@@ -57,7 +57,7 @@ jobs:
       - name: Set up match and build with Fastlane
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }} 
-          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}# if using encrypted repo
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
           APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
           APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID}}
           APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
