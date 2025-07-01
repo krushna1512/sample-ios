@@ -36,7 +36,8 @@ platform :ios do
       scheme: "SampleApp",
       export_method: "development",
       output_directory: "./build",
-      clean: true
+      clean: true,
+      xcargs: "IPHONEOS_DEPLOYMENT_TARGET=18.2"
     )
 
     # Delete temporary keychain
