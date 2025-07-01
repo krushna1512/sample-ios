@@ -45,6 +45,9 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
 
+      - name: List installed provisioning profiles
+        run: ls -l ~/Library/MobileDevice/Provisioning\ Profiles
+
       - name: Generate App Store Connect API Key
         run: echo "${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}" > AuthKey.p8
 
