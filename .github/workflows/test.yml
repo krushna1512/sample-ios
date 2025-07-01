@@ -45,6 +45,14 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
 
+      - name: Inspect Provisioning Profile
+        run: |
+          for file in ~/Library/MobileDevice/Provisioning\ Profiles/*.mobileprovision; do
+            echo "Provisioning profile: $file"
+            security cms -D -i "$file" | grep -A 5 application-identifier
+          done
+
+
       - name: List installed provisioning profiles
         run: ls -l ~/Library/MobileDevice/Provisioning\ Profiles
 
