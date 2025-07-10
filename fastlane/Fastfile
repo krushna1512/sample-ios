@@ -38,6 +38,7 @@ platform :ios do
       output_directory: "./build",
       clean: true,
       xcargs: "IPHONEOS_DEPLOYMENT_TARGET=18.2",
+      code_sign_identity: "iPhone Developer: Krushna Sharma (X4LV9Y6HX6)",
       export_options: {
         provisioningProfiles: {
           "com.yapsody.SampleApp" => "d3e34931-0350-40aa-9472-6b54e37efe02"
