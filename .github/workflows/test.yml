@@ -39,11 +39,6 @@ jobs:
           security unlock-keychain -p ${{ secrets.MATCH_PASSWORD }} ${{ secrets.MATCH_KEYCHAIN_NAME }}
           security set-keychain-settings ${{ secrets.MATCH_KEYCHAIN_NAME }}
 
-      # - name: Match development certificate
-      #   run: bundle exec fastlane match development --api_key_path ./api_key.json
-      #   env:
-      #     MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-      #     MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
       - name: Set up match and build with Fastlane
         env:
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }} 
@@ -53,47 +48,23 @@ jobs:
           APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
         run: bundle exec fastlane ios build_only --verbose
         
-
-      # - name: Inspect Provisioning Profile
-      #   run: |
-      #     for file in ~/Library/MobileDevice/Provisioning\ Profiles/*.mobileprovision; do
-      #       echo "Provisioning profile: $file"
-      #       security cms -D -i "$file" | grep -A 5 application-identifier
-      #     done
+      # - name: Generate App Store Connect API Key
+      #   run: echo "${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}" > AuthKey.p8
 
 
-      # - name: List installed provisioning profiles
-      #   run: ls -l ~/Library/MobileDevice/Provisioning\ Profiles
-
-      - name: Generate App Store Connect API Key
-        run: echo "${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}" > AuthKey.p8
-
-
-      - name: List AuthKey file
-        run: ls -l AuthKey.p8
+      # - name: List AuthKey file
+      #   run: ls -l AuthKey.p8
       
-      - name: Print AuthKey contents (base64-decoded)
-        run: |
-          echo "Decoded AuthKey.p8 contents:"
-          cat AuthKey.p8
-
-      - name: Set up match and build with Fastlane
-        env:
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }} 
-          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
-          APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
-          APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID}}
-          APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
-        run: bundle exec fastlane ios build_only --verbose
-
-      - name: Print Xcode build log
-        if: always()
-        run: |
-          echo "===== Xcode Build Log ====="
-          cat /Users/runner/Library/Logs/gym/SampleApp-SampleApp.log || echo "Log file not found"
-
-
-      # - name: Delete temporary keychain (cleanup)
-      #   if: always()
+      # - name: Print AuthKey contents (base64-decoded)
       #   run: |
-      #     security delete-keychain ci_temp.keychain
+      #     echo "Decoded AuthKey.p8 contents:"
+      #     cat AuthKey.p8
+
+      # - name: Set up match and build with Fastlane
+      #   env:
+      #     MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }} 
+      #     MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+      #     APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}
+      #     APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID}}
+      #     APP_STORE_CONNECT_API_KEY_B64: ${{ secrets.APP_STORE_CONNECT_API_KEY_B64 }}
+      #   run: bundle exec fastlane ios build_only --verbose
