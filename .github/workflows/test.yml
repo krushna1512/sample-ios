@@ -93,7 +93,7 @@ jobs:
           cat /Users/runner/Library/Logs/gym/SampleApp-SampleApp.log || echo "Log file not found"
 
 
-      - name: Delete temporary keychain (cleanup)
-        if: always()
-        run: |
-          security delete-keychain ci_temp.keychain
+      # - name: Delete temporary keychain (cleanup)
+      #   if: always()
+      #   run: |
+      #     security delete-keychain ci_temp.keychain
