@@ -45,11 +45,6 @@ platform :ios do
       }
     )
 
-    upload_to_testflight(  
-      api_key: api_key,
-      ipa: "./build/SampleApp.ipa"
-    )
-
     # Delete temporary keychain
     delete_keychain(name: "ci_temp.keychain")
   end
