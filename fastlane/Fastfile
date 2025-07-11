@@ -22,7 +22,7 @@ platform :ios do
 
     # Fetch provisioning profiles & certificates using match
     match(
-      type: "appstore",
+      type: "development",
       api_key: api_key,
       keychain_name: "ci_temp.keychain",
       keychain_password: "android",
