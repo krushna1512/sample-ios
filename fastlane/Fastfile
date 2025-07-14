@@ -22,7 +22,7 @@ platform :ios do
 
     # Fetch provisioning profiles & certificates using match
     match(
-      type: "development",
+      type: "appstore",
       api_key: api_key,
       keychain_name: "ci_temp.keychain",
       keychain_password: "android",
@@ -34,10 +34,9 @@ platform :ios do
     build_app(
       project: "SampleApp.xcodeproj",
       scheme: "SampleApp",
-      export_method: "development",
+      export_method: "appstore",
       output_directory: "./build",
       clean: true,
-      xcargs: "IPHONEOS_DEPLOYMENT_TARGET=18.2",
       export_options: {
         provisioningProfiles: {
           "com.yapsody.SampleApp" => "match Development com.yapsody.SampleApp"
