@@ -34,7 +34,7 @@ platform :ios do
     build_app(
       project: "SampleApp.xcodeproj",
       scheme: "SampleApp",
-      export_method: "appstore",
+      export_method: "app-store",
       output_directory: "./build",
       clean: true,
       export_options: {
