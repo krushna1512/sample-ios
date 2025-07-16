@@ -34,15 +34,16 @@ jobs:
 
       - name: Validate match Git repo access
         env:
-            GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+          GIT_URL: ${{ secrets.MATCH_GIT_URL }}
         run: |
-            echo "Checking access to $GIT_URL"
-            if git ls-remote "$GIT_URL" &> /dev/null; then
-              echo "Git repo is accessible."
-            else
-              echo "Cannot access match Git repo: $GIT_URL"
-              exit 1
-            fi
+          echo "Checking access to $GIT_URL"
+          if git ls-remote "$GIT_URL" &> /dev/null; then
+            echo "Git repo is accessible."
+          else
+            echo "Cannot access match Git repo: $GIT_URL"
+            exit 1
+          fi
+
 
       - name: Set up match and build with Fastlane
         env:
