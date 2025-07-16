@@ -6,8 +6,8 @@ platform :ios do
       build_number: Time.now.strftime("%Y%m%d%H%M") # Optional: makes it dynamic
     )
     create_keychain(
-      name: "ci_temp.keychain",
-      password: "android",
+      name: ENV['MATCH_KEYCHAIN_NAME'],
+      password: ENV['MATCH_PASSWORD'],
       default_keychain: true,
       unlock: true,
       timeout: 3600,
