@@ -22,15 +22,15 @@ jobs:
       - name: Install Fastlane
         run: gem install fastlane
 
-      - name: Generate App Store Connect API Key JSON
-        run: |
-          echo '{
-            "key_id": "${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}",
-            "issuer_id": "${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID}}",
-            "key": "${{ secrets.APP_STORE_CONNECT_API_KEY}}",
-            "duration": 1200,
-            "in_house": false
-          }' > api_key.json
+      # - name: Generate App Store Connect API Key JSON
+      #   run: |
+      #     echo '{
+      #       "key_id": "${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}",
+      #       "issuer_id": "${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID}}",
+      #       "key": "${{ secrets.APP_STORE_CONNECT_API_KEY}}",
+      #       "duration": 1200,
+      #       "in_house": false
+      #     }' > api_key.json
 
       - name: Set up match and build with Fastlane
         env:
