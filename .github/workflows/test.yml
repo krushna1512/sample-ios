@@ -1,4 +1,4 @@
-name: test signin
+name: Fastlane IOS Deployment
 
 on:
   workflow_dispatch:
