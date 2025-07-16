@@ -5,6 +5,7 @@ platform :ios do
       project: "SampleApp.xcodeproj",
       scheme: "SampleApp",
       clean: true,
+      devices: ["iPhone 6s"],
       output_types: "junit",
       output_directory: "test_output"
     )
