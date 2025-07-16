@@ -1,4 +1,15 @@
 platform :ios do
+  desc "Run unit tests"
+  lane :test do
+    scan(
+      project: "SampleApp.xcodeproj",
+      scheme: "SampleApp",
+      clean: true,
+      devices: ["iPhone 14"], # Optional, customize your simulator
+      output_types: "junit",
+      output_directory: "test_output"
+    )
+  end
   lane :build_only do
     # Create a temporary keychain
     increment_build_number(
