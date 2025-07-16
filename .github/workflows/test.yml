@@ -32,12 +32,12 @@ jobs:
             "in_house": false
           }' > api_key.json
 
-      - name: Setup keychain for Fastlane
-        run: |
-          security create-keychain -p ${{ secrets.MATCH_PASSWORD }} ${{ secrets.MATCH_KEYCHAIN_NAME }}
-          security default-keychain -s ${{ secrets.MATCH_KEYCHAIN_NAME }}
-          security unlock-keychain -p ${{ secrets.MATCH_PASSWORD }} ${{ secrets.MATCH_KEYCHAIN_NAME }}
-          security set-keychain-settings ${{ secrets.MATCH_KEYCHAIN_NAME }}
+      # - name: Setup keychain for Fastlane
+      #   run: |
+      #     security create-keychain -p ${{ secrets.MATCH_PASSWORD }} ${{ secrets.MATCH_KEYCHAIN_NAME }}
+      #     security default-keychain -s ${{ secrets.MATCH_KEYCHAIN_NAME }}
+      #     security unlock-keychain -p ${{ secrets.MATCH_PASSWORD }} ${{ secrets.MATCH_KEYCHAIN_NAME }}
+      #     security set-keychain-settings ${{ secrets.MATCH_KEYCHAIN_NAME }}
 
       - name: Set up match and build with Fastlane
         env:
