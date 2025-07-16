@@ -6,8 +6,8 @@ platform :ios do
       build_number: Time.now.strftime("%Y%m%d%H%M") # Optional: makes it dynamic
     )
     create_keychain(
-      name: ENV['MATCH_KEYCHAIN_NAME'],
-      password: ENV['MATCH_PASSWORD'],
+      name: ENV['MATCH_KEYCHAIN_NAME'],  # name can be anything
+      password: ENV['MATCH_PASSWORD'], # It should be same as we set at the time of profile creation
       default_keychain: true,
       unlock: true,
       timeout: 3600,
@@ -28,8 +28,8 @@ platform :ios do
     match(
       type: "appstore",
       api_key: api_key,
-      keychain_name: "ci_temp.keychain",
-      keychain_password: "android",
+      keychain_name: ENV['MATCH_KEYCHAIN_NAME'],
+      keychain_password: ENV['MATCH_PASSWORD'],
       readonly: true,
       git_url: ENV["MATCH_GIT_URL"]
     )
