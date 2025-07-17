@@ -3,7 +3,7 @@ platform :ios do
     # Create a temporary keychain
     increment_build_number(
       xcodeproj: "SampleApp.xcodeproj",
-      build_number: Time.now.strftime("%Y%m%d%H%M") # Optional: makes it dynamic
+      build_number: ENV['BUILD_NUMBER']
     )
     create_keychain(
       name: ENV['MATCH_KEYCHAIN_NAME'],  # name can be anything
