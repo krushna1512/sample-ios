@@ -31,7 +31,6 @@ platform :ios do
       keychain_name: ENV['MATCH_KEYCHAIN_NAME'],
       keychain_password: ENV['MATCH_PASSWORD'],
       readonly: true,
-      import_certificate: true,
       git_url: ENV["MATCH_GIT_URL"]
     )
 
