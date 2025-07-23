@@ -26,7 +26,7 @@ platform :ios do
 
     # Fetch provisioning profiles & certificates using match
     match(
-      type: "appstore",
+      type: "adhoc",
       api_key: api_key,
       keychain_name: ENV['MATCH_KEYCHAIN_NAME'],
       keychain_password: ENV['MATCH_PASSWORD'],
@@ -38,7 +38,7 @@ platform :ios do
     build_app(
       project: "SampleApp.xcodeproj",
       scheme: "SampleApp",
-      export_method: "app-store",
+      export_method: "adhoc",
       output_directory: "./build",
       clean: true
     )
