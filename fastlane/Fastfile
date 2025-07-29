@@ -38,7 +38,7 @@ platform :ios do
     build_app(
       project: "SampleApp.xcodeproj",
       scheme: "SampleApp",
-      export_method: "adhoc",
+      export_method: "ad-hoc",
       output_directory: "./build",
       clean: true
     )
