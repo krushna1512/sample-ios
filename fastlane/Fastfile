@@ -54,7 +54,7 @@ platform :ios do
       firebase_app_distribution(
         app: "1:317101981893:ios:70ca56ed613cc6ae76b0ac",    # <-- Replace with your real App ID
         ipa_path: "./build/SampleApp.ipa",
-        testers: "krushna.sharma@yapsody.com,
+        testers: "krushna.sharma@yapsody.com",
         release_notes: "Lots of amazing new features to test out!"
       )
 
