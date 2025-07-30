@@ -31,7 +31,7 @@ jobs:
         run: gem install fastlane
 
       - name: Install Fastlane Plugins
-        run: fastlane install_plugins
+        run: bundle exec fastlane install_plugins
 
       - name: Set up match and build with Fastlane
         env:
