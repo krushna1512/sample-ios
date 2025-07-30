@@ -30,6 +30,9 @@ jobs:
       - name: Install Fastlane
         run: gem install fastlane
 
+      - name: Install Fastlane Plugins
+        run: fastlane install_plugins
+
       - name: Set up match and build with Fastlane
         env:
           MATCH_KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
