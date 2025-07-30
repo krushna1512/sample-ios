@@ -6,8 +6,8 @@ platform :ios do
       build_number: ENV['BUILD_NUMBER']
     )
     create_keychain(
-      name: ENV['MATCH_KEYCHAIN_NAME'],  # name can be anything
-      password: ENV['MATCH_PASSWORD'], # It should be same as we set at the time of profile creation
+      name: ENV['MATCH_KEYCHAIN_NAME'],
+      password: ENV['MATCH_PASSWORD'],
       default_keychain: true,
       unlock: true,
       timeout: 3600,
@@ -24,9 +24,16 @@ platform :ios do
       is_key_content_base64: true
     )
 
-    # Fetch provisioning profiles & certificates using match
+    # Set deployment mode: adhoc for staging, appstore for production
+    deploy_env = ENV['DEPLOY_ENVIRONMENT']
+    match_type = deploy_env == 'production' ? "appstore" : "adhoc"
+    export_method = deploy_env == 'production' ? "app-store" : "ad-hoc"
+
+    UI.message("🔧 Building for #{deploy_env} using match type '#{match_type}' and export method '#{export_method}'")
+
+    # Fetch provisioning profiles & certificates
     match(
-      type: "adhoc",
+      type: match_type,
       api_key: api_key,
       keychain_name: ENV['MATCH_KEYCHAIN_NAME'],
       keychain_password: ENV['MATCH_PASSWORD'],
@@ -38,18 +45,20 @@ platform :ios do
     build_app(
       project: "SampleApp.xcodeproj",
       scheme: "SampleApp",
-      export_method: "ad-hoc",
+      export_method: export_method,
       output_directory: "./build",
       clean: true
     )
 
-    #upload_to_testflight(
-      #api_key: api_key,
-      #ipa: "./build/SampleApp.ipa"
-    #)
-
+    # Optionally: upload to TestFlight for production
+    if deploy_env == 'production'
+      upload_to_testflight(
+        api_key: api_key,
+        ipa: "./build/SampleApp.ipa"
+      )
+    end
 
     # Delete temporary keychain
-    delete_keychain(name: "ci_temp.keychain")
+    delete_keychain(name: ENV['MATCH_KEYCHAIN_NAME'])
   end
 end
