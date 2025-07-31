@@ -37,8 +37,7 @@ platform :ios do
       keychain_name: ENV['MATCH_KEYCHAIN_NAME'],
       keychain_password: ENV['MATCH_PASSWORD'],
       readonly: true,
-      git_url: ENV["MATCH_GIT_URL"],
-      app_identifier: bundle_id
+      git_url: ENV["MATCH_GIT_URL"]
     )
 
     # Build the app
