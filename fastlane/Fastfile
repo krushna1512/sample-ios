@@ -61,7 +61,7 @@ platform :ios do
 
     if deploy_env == "staging"
       firebase_app_distribution(
-        app: "1:317101981893:ios:70ca56ed613cc6ae76b0ac",    # <-- Replace with your real App ID
+        app: "1:216051318974:ios:264f9a9d1c82a03c47deef",    # <-- Replace with your real App ID
         ipa_path: "./build/SampleApp.ipa",
         firebase_cli_token: "1//0g1ntEhTm8PFiCgYIARAAGBASNwF-L9IrpM0BwXOM-dLVeg3WIDs-flhyMmEcSdfNDerK6agibO0Z4AgLhIk7i4V4XDBwKrNUuNA",
         testers: "krushna.sharma@yapsody.com",
