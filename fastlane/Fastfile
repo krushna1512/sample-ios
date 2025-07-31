@@ -24,12 +24,15 @@ platform :ios do
       is_key_content_base64: true
     )
 
-    # Set deployment mode: adhoc for staging, appstore for production
     deploy_env = ENV['DEPLOY_ENVIRONMENT']
     match_type = deploy_env == 'production' ? "appstore" : "adhoc"
     export_method = deploy_env == 'production' ? "app-store" : "ad-hoc"
+    bundle_id = deploy_env == 'production' ? "com.yapsody.SampleApp" : "com.yapsody.pos.ipad"
 
-    UI.message("🔧 Building for #{deploy_env} using match type '#{match_type}' and export method '#{export_method}'")
+    UI.message("🔧 Building for #{deploy_env}")
+    UI.message("🔐 Match Type: #{match_type}, Export Method: #{export_method}")
+    UI.message("📦 Bundle Identifier: #{bundle_id}")
+
 
     # Fetch provisioning profiles & certificates
     match(
@@ -38,7 +41,8 @@ platform :ios do
       keychain_name: ENV['MATCH_KEYCHAIN_NAME'],
       keychain_password: ENV['MATCH_PASSWORD'],
       readonly: true,
-      git_url: ENV["MATCH_GIT_URL"]
+      git_url: ENV["MATCH_GIT_URL"],
+      app_identifier: bundle_id
     )
 
     # Build the app
@@ -47,7 +51,11 @@ platform :ios do
       scheme: "SampleApp",
       export_method: export_method,
       output_directory: "./build",
-      clean: true
+      clean: true,
+      export_options: {
+        provisioningProfiles: {
+          bundle_id => "match #{match_type} #{bundle_id}"
+        }
     )
 
     if deploy_env == "staging"
