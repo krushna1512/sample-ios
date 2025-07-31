@@ -27,12 +27,8 @@ platform :ios do
     deploy_env = ENV['DEPLOY_ENVIRONMENT']
     match_type = deploy_env == 'production' ? "appstore" : "adhoc"
     export_method = deploy_env == 'production' ? "app-store" : "ad-hoc"
-    bundle_id = deploy_env == 'production' ? "com.yapsody.SampleApp" : "com.yapsody.pos.ipad"
 
-    UI.message("🔧 Building for #{deploy_env}")
-    UI.message("🔐 Match Type: #{match_type}, Export Method: #{export_method}")
-    UI.message("📦 Bundle Identifier: #{bundle_id}")
-
+    UI.message("🔧 Building for #{deploy_env} using match type '#{match_type}' and export method '#{export_method}'")
 
     # Fetch provisioning profiles & certificates
     match(
@@ -51,12 +47,7 @@ platform :ios do
       scheme: "SampleApp",
       export_method: export_method,
       output_directory: "./build",
-      clean: true,
-      export_options: {
-        provisioningProfiles: {
-          bundle_id => "match #{match_type} #{bundle_id}"
-        }
-      }
+      clean: true
     )
 
     if deploy_env == "staging"
