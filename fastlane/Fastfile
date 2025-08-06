@@ -64,7 +64,7 @@ platform :ios do
         automatic_release: true, 
         skip_metadata: true,
         skip_screenshots: true,
-        skip_precheck: true
+        run_precheck_before_submit: true
       )
 
       # Optionally: If you want to keep TestFlight upload as well
