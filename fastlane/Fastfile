@@ -21,9 +21,6 @@ platform :ios do
       duration: 1200,
       in_house: false,
       is_key_content_base64: true,
-      submission_information: {
-        export_compliance_uses_encryption: false
-      }
     )
 
     deploy_env = ENV['DEPLOY_ENVIRONMENT']
@@ -67,7 +64,11 @@ platform :ios do
         automatic_release: true, 
         skip_metadata: true,
         skip_screenshots: true,
-        run_precheck_before_submit: false
+        run_precheck_before_submit: false,
+        submission_information: {
+          export_compliance_uses_encryption: true,
+          export_compliance_is_exempt: true
+        }
       )
 
       # Optionally: If you want to keep TestFlight upload as well
