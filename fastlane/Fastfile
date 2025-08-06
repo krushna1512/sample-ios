@@ -60,10 +60,11 @@ platform :ios do
       deliver(
         ipa: "./build/SampleApp.ipa",
         api_key: api_key,
-        submit_for_review: true, # or false if you want to do it manually
-        automatic_release: true, # or false if you want to release manually
+        submit_for_review: true, 
+        automatic_release: true, 
         skip_metadata: true,
-        skip_screenshots: true
+        skip_screenshots: true,
+        skip_precheck: true
       )
 
       # Optionally: If you want to keep TestFlight upload as well
