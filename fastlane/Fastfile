@@ -20,7 +20,10 @@ platform :ios do
       key_content: ENV['APP_STORE_CONNECT_API_KEY_B64'],
       duration: 1200,
       in_house: false,
-      is_key_content_base64: true
+      is_key_content_base64: true,
+      submission_information: {
+        export_compliance_uses_encryption: false
+      }
     )
 
     deploy_env = ENV['DEPLOY_ENVIRONMENT']
