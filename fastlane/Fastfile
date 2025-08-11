@@ -56,7 +56,7 @@ platform :ios do
       )
 
     elsif deploy_env == 'production'
-      # Option 1: Directly submit to App Store for review and release
+     
       deliver(
         ipa: "./build/SampleApp.ipa",
         api_key: api_key,
