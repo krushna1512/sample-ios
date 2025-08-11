@@ -66,8 +66,8 @@ platform :ios do
         skip_screenshots: true,
         run_precheck_before_submit: false,
         submission_information: {
-          export_compliance_uses_encryption: true,
-          export_compliance_is_exempt: true
+          export_compliance_uses_encryption: false,
+          export_compliance_is_exempt: false
         }
       )
 
