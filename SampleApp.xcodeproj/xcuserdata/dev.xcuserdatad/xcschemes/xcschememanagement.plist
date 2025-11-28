@@ -4,10 +4,33 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>SampleApp-Staging.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>SampleApp.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>D7C802612DEF235700393D19</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D7C8026E2DEF235900393D19</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D7C802782DEF235900393D19</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
